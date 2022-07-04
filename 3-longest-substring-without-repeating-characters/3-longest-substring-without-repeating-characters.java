@@ -15,15 +15,16 @@ class Solution {
             
             while (chars[r] > 1) {
                 char l = s.charAt(left);
-                chars[l]--;
                 left++;
+                chars[l]--;
             }
-            
             res = Math.max(res, right - left + 1);
-            
             right++;
         }
         
         return res;
     }
 }
+
+// pwwkew
+// r l
