@@ -1,21 +1,22 @@
 class Solution {
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        HashSet<String> visited = new HashSet<>();
-        Queue<String> queue = new ArrayDeque<>();
-        
+        Queue<String> queue = new ArrayDeque();
+        HashSet<String> visited = new HashSet();
         queue.offer(beginWord);
         visited.add(beginWord);
         
         int count = 1;
         
         while (!queue.isEmpty()) {
-            count++;
             
+            count++;
             int size = queue.size();
-            for (int i = 0; i < size; i++) {
-    
+            
+            for (int i = 0; i < size; i++) {           
                 String curWord = queue.poll();
-                for (String nextWord: getNextWords(wordList, curWord)) {
+                List<String> nextWordsList = getNextWords(curWord, wordList);
+                System.out.println(nextWordsList);
+                for (String nextWord: nextWordsList) {
                     if (visited.contains(nextWord)) {
                         continue;
                     }
@@ -33,24 +34,26 @@ class Solution {
         return 0;
     }
     
-    private ArrayList<String> getNextWords(List<String> wordList, String word) {
-        ArrayList<String> nextWords = new ArrayList<>();
+    private List<String> getNextWords(String word, List<String> wordList) {
+        
+        List<String> arr = new ArrayList();
         
         for (String each: wordList) {
-            boolean hasOneDiff = false;
+            boolean changedOnce = false;
             for (int i = 0; i < word.length(); i++) {
-                if (word.charAt(i) != each.charAt(i)) {
-                    if (hasOneDiff) {
-                        hasOneDiff = false;
+                if (each.charAt(i) != word.charAt(i)) {
+                    if (changedOnce) {
+                        changedOnce = false;
                         break;
                     }
-                    hasOneDiff = true;
+                    changedOnce = true;
                 }
             }
-            if(hasOneDiff) {
-                nextWords.add(each);   
+            if (changedOnce) {
+                arr.add(each);
             }
         }
-        return nextWords;
+        
+        return arr;
     }
 }
